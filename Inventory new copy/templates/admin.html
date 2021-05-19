@@ -1,0 +1,56 @@
+
+<!DOCTYPE html>
+<!-- Created By CodingNepal -->
+<html lang="en" dir="ltr">
+   <head>
+ <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+  <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/register.css')}}">
+      <meta charset="utf-8">
+      <title>inventoryapp</title>
+      
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+   </head>
+   
+   <body>
+      <div class="container">
+         <header>Login Form</header>
+         <div class="progress-bar">
+            
+         <div class="form-outer">
+            <form method="post" action="">
+			<div class="msg">{{ msg }}</div>
+               <div class="page slide-page">
+                  
+                  <div class="field">
+                     <div class="label">
+                        Name
+                     </div>
+                     <input type="text" name="username" required>
+                  </div>
+                  <div class="field">
+                     <div class="label">
+                        Password
+                     </div>
+                     <input type="password" name="password" required>
+                  </div>
+				  
+                  <div class="field">
+                     <button class="firstNext next">Login</button>
+                  </div>
+               
+               </div>
+            </form>
+			<p>Not yet registered?
+			<a href="{{url_for('adminregister')}}">click</a> here to register
+		</p>
+        <a href="/home">  
+            <input type="submit" value="DASH BOARD"/>  
+           </a>
+         </div>
+         </div>
+      </div>
+      <script src="script.js"></script>
+   </body>
+</html>

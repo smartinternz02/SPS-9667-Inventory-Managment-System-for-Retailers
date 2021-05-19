@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<!-- Created By CodingNepal -->
+<html lang="en" dir="ltr">
+   <head>
+ <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+  <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/register.css')}}">
+      <meta charset="utf-8">
+      <title>inventoryapp</title>
+      
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+   </head>
+   
+   <body>
+      <div class="container">
+         <header>Registration Form</header>
+         <div class="progress-bar">
+            
+         <div class="form-outer">
+            <form method="post" action="">
+			<div class="msg">{{ msg }}</div>
+               <div class="page slide-page">
+                  
+                  <div class="field">
+                     <div class="label">
+                        Name
+                     </div>
+                     <input type="text" name="fname" required>
+                  </div>
+                  <div class="field">
+                     <div class="label">
+                        Password
+                     </div>
+                     <input type="password" name="pass" required>
+                  </div>
+				  <div class="field">
+                     <div class="label">
+                        Email
+                     </div>
+                     <input type="email" name="emailid" required>
+                  </div>
+                  <div class="field">
+                     <button class="firstNext next">Register</button>
+                  </div>
+               
+               </div>
+            </form>
+			<p>already registered?
+			<a href="{{url_for('admin')}}">click</a> here to login
+		</p>
+        <a href="/home">  
+            <input type="submit" value="DASH BOARD"/>  
+           </a>
+         </div>
+         </div>
+      </div>
+      <script src="script.js"></script>
+   </body>
+</html>
