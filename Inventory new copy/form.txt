@@ -1,2 +1,0 @@
-form:
-https://stackoverflow.com/questions/59222926/html-elements-shrinking-after-add-form-tag
