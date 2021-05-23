@@ -39,8 +39,7 @@ def admin():
         password=request.form['password']
         conn=mysql.connect()
         cur=conn.cursor()
-        cur.execute('SELECT * FROM adminregister WHERE name = % s AND password = % s', (username1, password ),)
-        account = cur.fetchone()
+       
         
         cur.execute("select `email` from `adminregister` WHERE `name`=%s",(username1))
         data=cur.fetchall()
@@ -85,8 +84,7 @@ def adminregister():
         elif not re.match(r'[A-Za-z0-9]+', username1):
             msg = 'name must contain only characters and numbers !'
         else:
-            cur.execute("INSERT INTO `adminregister`(`name`, `password`, `email`) VALUES(%s,%s,%s)",(username1,password1,EmailID))
-            conn.commit()
+           
             msg = 'You have successfully registered !'
             return redirect('/view')
             
@@ -107,8 +105,6 @@ def add():
         session['username']  = un
         conn=mysql.connect()
         cur=conn.cursor()
-        cur.execute("INSERT INTO `product`(`username`,`productname`, `productdesc`,`location`, `price`, `avlqty`,`units`) VALUES(%s,%s,%s,%s,%s,%s,%s)",(un,pn,pd,location,pr,pq,unit))
-        conn.commit()
         
         
         return redirect('view')
@@ -150,8 +146,7 @@ def edit():
 
         conn=mysql.connect()
         cur=conn.cursor()
-        cur.execute("UPDATE `product` SET  `productname`='"+productname+"',`productdesc`='"+productdesc+"',`price`='"+price+"',`units`='"+unit+"',`avlqty`='"+avlqty+"' WHERE `productid`='"+id+"'")
-        conn.commit()
+        
         return redirect('view')
     else:
         id=request.args.get('id')
@@ -175,7 +170,7 @@ def editcart():
             
             conn=mysql.connect()
             cur=conn.cursor()
-            cur.execute("select `avlqty` from `product` WHERE `productid`=%s",(id))
+           
             data=cur.fetchall()
     
             try:
@@ -192,10 +187,7 @@ def editcart():
                
                    resu=str(float(data[0][0])-float(qty))
                    
-                   cur.execute("INSERT INTO `cart`(`productid`,`username`,`productname`, `productdesc`, `price`, `qty`,`total`,`avlqty`) VALUES(%s,%s,%s,%s,%s,%s,%s,%s)",(id,session['username'],productname,productdesc,price,qty,total,resu))
-                   cur.execute("INSERT INTO `track`(`username`, `productname`,`productdesc`, `price`, `qty`,`total`,`avlqty`) VALUES(%s,%s,%s,%s,%s,%s,%s)",(session['username'],productname,productdesc,price,qty,total,resu))
-                  
-                   conn.commit()
+                   
                    
                    cur.execute("UPDATE `product` SET `avlqty`='"+resu+"' WHERE `productid`=%s",(id))
                    conn.commit()
@@ -208,10 +200,7 @@ def editcart():
                     
                     
                     resu=str(float(data[0][0])-float(qty))
-                    cur.execute("INSERT INTO `cart`(`productid`,`username`,`productname`, `productdesc`, `price`, `qty`,`total`,`avlqty`) VALUES(%s,%s,%s,%s,%s,%s,%s,%s)",(id,session['username'],productname,productdesc,price,qty,total,resu))
-                    cur.execute("INSERT INTO `track`(`username`, `productname`,`productdesc`, `price`, `qty`,`total`,`avlqty`) VALUES(%s,%s,%s,%s,%s,%s,%s)",(session['username'],productname,productdesc,price,qty,total,resu))
-                  
-                    conn.commit()
+                   
                     cur.execute("UPDATE `product` SET `avlqty`='"+resu+"' WHERE `productid`=%s",(id))
                     conn.commit()
                     return redirect('cart')
@@ -229,8 +218,7 @@ def editcart():
             id=request.args.get('id')
             conn=mysql.connect()
             cur=conn.cursor()
-            cur.execute("SELECT `productid`, `productname`, `productdesc`, `price`, `units`, `avlqty` FROM `product` where `productid`='"+str(id)+"'")
-            data=cur.fetchone()
+           
             cur.execute("SELECT `name` FROM `adminregister` where name=%s" ,(session['username'],))
             name=cur.fetchall()
     
@@ -252,8 +240,7 @@ def shipping():
             if float(grand[0][0])>=threshold:
                
                 from flask import session
-                cur.execute("SELECT `avlqty` from product where username=%s" ,(session['username'],))
-                data=cur.fetchall()
+             data=cur.fetchall()
                 
                 
                 length=int(len(data))
@@ -266,7 +253,7 @@ def shipping():
                             subject='Alert to retailers',
                             html_content="Dear customer,"+"check your inventory  account :"+" It seems one or more product "+"no longer available in your store please reorder your stock inorder to experiance good customer base "+"for more information click the link below  "+"http://arpitaprakashhegdeinventoryapp.apps.pcfdev.in/mail")
                         try:
-                            sg = SendGridAPIClient('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')
+                            sg = SendGridAPIClient('')
                             response = sg.send(message)
                             print(response.status_code)
                             print(response.body)
@@ -298,8 +285,7 @@ def deletecart():
     conn=mysql.connect()
     cur=conn.cursor()
    
-    cur.execute("select `qty` from `cart` WHERE `productid`=%s",(id))
-    data=cur.fetchall()
+   
     cur.execute("select `avlqty` from `cart` WHERE `productid`=%s",(id))
     data1=cur.fetchall()
     cur.execute("DELETE FROM `cart` WHERE `productid`='"+id+"'")
@@ -337,8 +323,7 @@ def view():
     conn=mysql.connect()
     cur=conn.cursor()
     
-    cur.execute("SELECT `productid`, `productname`, `productdesc`,`location`, `price`, `units`, `avlqty` FROM `product` where username=%s" ,(session['username'],))
-    data=cur.fetchall()
+    
     cur.execute("SELECT `name` FROM `adminregister` where name=%s" ,(session['username'],))
     name=cur.fetchall()
     
@@ -374,8 +359,7 @@ def mail():
     conn=mysql.connect()
     cur=conn.cursor()
    
-    cur.execute("SELECT `productname`,`productdesc`,`avlqty` from product where avlqty='0.0'AND username=%s" ,(session['username'],))
-    data=cur.fetchall()
+   
   
     conn.commit()
 
@@ -406,8 +390,7 @@ def tracktotal():
     
         session['username']=abc[0][0]
         
-        cur.execute("INSERT INTO `history`(`username`,`date`,`totalqty`,`totalprice`) VALUES(%s,%s,%s,%s)",(str(abc[0][0]),date,str(data[0][0]),str(data[0][1])))
-        conn.commit()
+        
         return render_template('tracktotal.html',data=data)
         
         
@@ -420,8 +403,7 @@ def tracktotal():
 def stock():
     conn=mysql.connect()
     cur=conn.cursor()
-    cur.execute("SELECT `productid`, `productname`, `productdesc`, `price`, `units`, `avlqty` FROM `product` where username=%s" ,(session['username'],))
-    data=cur.fetchall()
+    
 
     return render_template('stock.html',data=data)
 
@@ -445,8 +427,7 @@ def history():
     conn=mysql.connect()
     cur=conn.cursor()
     
-    cur.execute("select * from history where username=%s" ,(session['username'],))
-    data=cur.fetchall()
+   
     conn.commit()      
   
     return render_template('history.html',data=data)
@@ -455,9 +436,7 @@ def clearhistory():
     conn=mysql.connect()
     cur=conn.cursor()
     
-    cur.execute("delete from history where username=%s" ,(session['username'],))
-    data=cur.fetchall()
-    conn.commit()      
+       conn.commit()      
  
     
     return render_template('history.html',data=data)
@@ -465,8 +444,7 @@ def clearhistory():
 def logout():
     conn=mysql.connect()
     cur=conn.cursor()
-    cur.execute("delete from cart where username=%s" ,(session['username'],))
-    cur.execute("delete from track where username=%s" ,(session['username'],))
+    
     conn.commit()
     session.pop("username",None)
  
