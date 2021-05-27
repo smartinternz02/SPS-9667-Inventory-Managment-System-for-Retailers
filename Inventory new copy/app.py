@@ -261,12 +261,12 @@ def shipping():
                     if float(data[i][0])==0:
                         
                         message = Mail(
-                            from_email='arpitaprakashhegde@gmail.com',
+                            from_email='your mail',
                             to_emails=session['email'],
                             subject='Alert to retailers',
                             html_content="Dear customer,"+"check your inventory  account :"+" It seems one or more product "+"no longer available in your store please reorder your stock inorder to experiance good customer base "+"for more information click the link below  "+"http://arpitaprakashhegdeinventoryapp.apps.pcfdev.in/mail")
                         try:
-                            sg = SendGridAPIClient('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')
+                            sg = SendGridAPIClient('your api')
                             response = sg.send(message)
                             print(response.status_code)
                             print(response.body)
